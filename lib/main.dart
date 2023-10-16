@@ -1,23 +1,25 @@
 import 'dart:io';
 
-// Define a type for actions that the user can perform
+/// A type representing actions that a user can perform.
 typedef UserAction = dynamic Function(List<String>);
 
-// Method to add an item to the provided list while user doesnt type in 'quit'
+/// Adds an item to the provided list.
+///
+/// Prompts the user for input and adds the entered item to the list
+/// if it's not empty.
 void addItemToList(List<String> list) {
-  print("Type 'quit' to stop adding items.");
-  String? item;
-  while (item != 'quit') {
-    print("Enter the item to add.");
-    item = stdin.readLineSync();
-    if (item != null && item.isNotEmpty && item != 'quit') {
-      list.add(item);
-      print("$item has been added to the list");
-    }
+  print("Enter the item to add: ");
+  String? item = stdin.readLineSync();
+  if (item != null && item.isNotEmpty) {
+    list.add(item);
+    print("$item has been added to the list");
   }
 }
 
-// Method to remove an item from the provided list
+/// Removes an item from the provided list.
+///
+/// Prompts the user for the item they wish to remove. If the item exists
+/// in the list, it gets removed. Otherwise, a not found message is displayed.
 void removeItemFromList(List<String> list) {
   print("Enter the item to remove: ");
   String? item = stdin.readLineSync();
@@ -28,24 +30,27 @@ void removeItemFromList(List<String> list) {
   }
 }
 
-// Method to display all items in the provided list
+/// Displays all items in the provided list.
+///
+/// If the list is empty, an appropriate message is shown.
 void displayList(List<String> list) {
   if (list.isEmpty) {
     print("Your list is empty.");
     return;
   }
-  print("----- Your grocery list -----");
   for (var i = 0; i < list.length; i++) {
     print("${i + 1}. ${list[i]}");
   }
 }
 
-// Method to exit the program
+/// Exits the program.
 void exitProgram([List<String>? _]) {
   exit(0);
 }
 
-// Method to display available options and get user input
+/// Displays a menu of available options and reads the user's input.
+///
+/// Returns the input option selected by the user.
 String? askUserForInput() {
   print("\n---------------------");
   print("Select an action to perform:");
@@ -58,7 +63,7 @@ String? askUserForInput() {
   return stdin.readLineSync(); // Read the user's choice
 }
 
-// A map that associates option keys with their corresponding actions and descriptions
+/// Maps option keys to their corresponding actions and descriptions.
 final Map<String, Map<String, dynamic>> options = {
   '1': {'action': addItemToList, 'description': 'Add item to list'},
   '2': {'action': removeItemFromList, 'description': 'Remove item from list'},
@@ -66,7 +71,9 @@ final Map<String, Map<String, dynamic>> options = {
   'q': {'action': exitProgram, 'description': 'Quit'}
 };
 
-// Method to execute the user's selected action
+/// Executes the action selected by the user based on their input.
+///
+/// If an invalid option is chosen, an appropriate error message is displayed.
 void executeUserRequest(String? userInput, List<String> list) {
   final option = options[userInput];
   if (option != null) {
@@ -77,7 +84,10 @@ void executeUserRequest(String? userInput, List<String> list) {
   }
 }
 
-// The main function, where the program starts
+/// The main entry point of the program.  
+///
+/// Initializes an empty grocery list and continually prompts the user
+/// to select and execute actions on it until they choose to exit.
 void main() {
   List<String> groceryList = []; // Initialize an empty grocery list
 
@@ -89,3 +99,4 @@ void main() {
     executeUserRequest(userInput, groceryList);
   } while (userInput != 'q');
 }
+

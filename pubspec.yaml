@@ -1,0 +1,12 @@
+name: GroceryList
+description: A program that holds a grocery list for the user to manipulate.
+version: 0.1.0
+
+environment:
+  sdk: '>=2.14.0 <3.0.0'  # Adjust this based on your Dart SDK version
+
+dependencies:
+  # Your project's dependencies go here
+
+dev_dependencies:
+  # Your project's development dependencies go here
