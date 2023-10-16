@@ -3,13 +3,17 @@ import 'dart:io';
 // Define a type for actions that the user can perform
 typedef UserAction = dynamic Function(List<String>);
 
-// Method to add an item to the provided list
+// Method to add an item to the provided list while user doesnt type in 'quit'
 void addItemToList(List<String> list) {
-  print("Enter the item to add: ");
-  String? item = stdin.readLineSync();
-  if (item != null && item.isNotEmpty) {
-    list.add(item);
-    print("$item has been added to the list");
+  print("Type 'quit' to stop adding items.");
+  String? item;
+  while (item != 'quit') {
+    print("Enter the item to add.");
+    item = stdin.readLineSync();
+    if (item != null && item.isNotEmpty && item != 'quit') {
+      list.add(item);
+      print("$item has been added to the list");
+    }
   }
 }
 
@@ -30,6 +34,7 @@ void displayList(List<String> list) {
     print("Your list is empty.");
     return;
   }
+  print("----- Your grocery list -----");
   for (var i = 0; i < list.length; i++) {
     print("${i + 1}. ${list[i]}");
   }
